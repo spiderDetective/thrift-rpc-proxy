@@ -69,6 +69,9 @@ func (r routecmd) build() []string {
 				case o == "proto=grpc":
 					dst = "grpc://" + addr
 
+				case o == "proto=thrift":
+					dst = "thrift://" + addr
+
 				case strings.HasPrefix(o, "weight="):
 					weight = o[len("weight="):]
 

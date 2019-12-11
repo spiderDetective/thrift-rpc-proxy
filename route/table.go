@@ -441,6 +441,12 @@ func (t Table) Lookup(req *http.Request, trace string, pick picker, match matche
 	return target
 }
 
+func (t Table) LookupThriftMethod(method string, pick picker) *Target {
+	path := "/" + method
+	target := t.lookup("", path, "", pick, prefixMatcher)
+	return target
+}
+
 func (t Table) LookupHost(host string, pick picker) *Target {
 	return t.lookup(host, "/", "", pick, prefixMatcher)
 }

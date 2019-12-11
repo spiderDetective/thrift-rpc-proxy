@@ -343,6 +343,12 @@ func startServers(cfg *config.Config) {
 					exit.Fatal("[FATAL] ", err)
 				}
 			}()
+		case "thrift":
+			go func() {
+				if err := proxy.ListenAndServeThrift(l, cfg, tlscfg); err != nil {
+					exit.Fatal("[FATAL] ", err)
+				}
+			}()
 		default:
 			exit.Fatal("[FATAL] Invalid protocol ", l.Proto)
 		}

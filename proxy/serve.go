@@ -99,6 +99,21 @@ func ListenAndServeTCP(l config.Listen, h tcp.Handler, cfg *tls.Config) error {
 	return serve(ln, srv)
 }
 
+func ListenAndServeThrift(l config.Listen, cfg *config.Config, tlsCfg *tls.Config) error {
+	ln, err := ListenTCP(l, tlsCfg)
+	if err != nil {
+		return err
+	}
+
+	srv := &thriftServer{
+		Cfg:          cfg,
+		Addr:         l.Addr,
+		ReadTimeout:  l.ReadTimeout,
+		WriteTimeout: l.WriteTimeout,
+	}
+	return serve(ln, srv)
+}
+
 func serve(ln net.Listener, srv Server) error {
 	mu.Lock()
 	servers = append(servers, srv)
